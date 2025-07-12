@@ -1,12 +1,13 @@
 import os
 import time
 from PIL import Image, ImageDraw, ImageFont
-from lib import epd2in13_V4
+from lib import epd2in13b_V4
+from haiku_gen import generate_haiku
 
 try:
-    epd = epd2in13_V4.EPD()
+    epd = epd2in13b_V4.EPD()
     epd.init()
-    epd.Clear(0xFF)
+    epd.Clear()
 
     # Prepare image and drawing context
     image = Image.new('1', (epd.height, epd.width), 255)  # '1' mode, white background
@@ -19,11 +20,7 @@ try:
     font = ImageFont.truetype(font_path, font_size)
 
     # Your haiku lines
-    haiku = [
-        "Silent autumn night", 
-        "Moonlight through the maple leaves", 
-        "Whispers on the breeze"
-    ]
+    haiku = generate_haiku()
 
     # Calculate vertical spacing for 3 lines centered nicely
     line_height = font.getsize("A")[1]  # height of one line
@@ -41,8 +38,8 @@ try:
     epd.display(epd.getbuffer(image))
 
     time.sleep(10)
-    epd.Clear(0xFF)
+    epd.Clear()
     epd.sleep()
 
 except KeyboardInterrupt:
-    epd2in13_V4.epdconfig.module_exit(cleanup=True)
+    epd2in13b_V4.epdconfig.module_exit(cleanup=True)
