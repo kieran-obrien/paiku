@@ -33,7 +33,7 @@ def format_value(value):
     return str(value)
 
 def build_prompt(user_params):
-    prompt = "Write a reflective haiku based on the following:\n\n"
+    prompt = "Write a reflective haiku inspired by the following data:\n\n"
     for key, val in user_params.items():
         if add_to_prompt(os.environ.get("RANDOMISER")):
             formatted = format_value(val)
