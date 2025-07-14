@@ -10,8 +10,8 @@ try:
     epd.Clear()
 
     # Create separate images for black and red
-    image_black = Image.new('1', (epd.height, epd.width), 255)  # white background
-    image_red = Image.new('1', (epd.height, epd.width), 255)    # white background
+    image_black = Image.new('1', (epd.width, epd.height), 255)
+    image_red = Image.new('1', (epd.width, epd.height), 255)
 
     draw_black = ImageDraw.Draw(image_black)
     draw_red = ImageDraw.Draw(image_red)
@@ -44,11 +44,11 @@ try:
             draw_red.text((x, y), line, font=font, fill=0)  # red layer (middle line)
         else:
             draw_black.text((x, y), line, font=font, fill=0)  # black layer
-
+    
     # Display
     epd.display(epd.getbuffer(image_black), epd.getbuffer(image_red))
 
-    time.sleep(10)
+    time.sleep(15)
     epd.Clear()
     epd.sleep()
 
