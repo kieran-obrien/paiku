@@ -10,8 +10,11 @@ try:
     epd.Clear()
 
     # Prepare image and drawing context
-    image = Image.new('1', (epd.height, epd.width), 255)  # '1' mode, white background
-    draw = ImageDraw.Draw(image)
+    image_black = Image.new('1', (epd.width, epd.height), 255)  # White background
+    image_red = Image.new('1', (epd.width, epd.height), 255)    # Also white background
+
+    draw_black = ImageDraw.Draw(image_black)
+    draw_red = ImageDraw.Draw(image_red)
 
     # Load your font (adjust path and size)
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -29,13 +32,17 @@ try:
 
     # Draw each line centered horizontally
     for i, line in enumerate(haiku):
-        w, h = draw.textsize(line, font=font)
+        w, h = draw_black.textsize(line, font=font)  # Use either draw here just for measuring
         x = (epd.width - w) // 2
         y = start_y + i * line_height
-        draw.text((x, y), line, font=font, fill=0)  # black text
 
-    # Send to display
-    epd.display(epd.getbuffer(image))
+    if i == 1:
+        draw_red.text((x, y), line, font=font, fill=0)   # red layer
+    else:
+        draw_black.text((x, y), line, font=font, fill=0) # black layer
+
+    # Display both buffers
+    epd.display(epd.getbuffer(image_black), epd.getbuffer(image_red))
 
     time.sleep(10)
     epd.Clear()
