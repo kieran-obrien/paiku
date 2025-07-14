@@ -19,7 +19,7 @@ try:
     # Load font
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     font_path = os.path.join(BASE_DIR, 'fonts', 'Quintessential-Regular.ttf')
-    font_size = 28
+    font_size = 14
     font = ImageFont.truetype(font_path, font_size)
 
     # Generate haiku
@@ -32,20 +32,34 @@ try:
     # Vertical centering
     total_text_height = line_height * len(haiku)
     start_y = (epd.height - total_text_height) // 2
-
-    # Draw haiku lines
+    
+    # Draw haiku lines rotated by -90 degrees
     for i, line in enumerate(haiku):
-        bbox = draw_black.textbbox((0, 0), line, font=font)
-        w = bbox[2] - bbox[0]
-        x = (epd.width - w) // 2
-        y = start_y + i * line_height
+        # Get text size
+        bbox = font.getbbox(line)  # alternative to textbbox for font only
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+
+        # Create temp image for the text line (white background)
+        text_img = Image.new('1', (text_width, text_height), 255)
+        text_draw = ImageDraw.Draw(text_img)
+        text_draw.text((0, 0), line, font=font, fill=0)
+
+        # Rotate text image -90 degrees (clockwise)
+        rotated_text_img = text_img.rotate(-90, expand=True)
+        rotated_w, rotated_h = rotated_text_img.size
+
+        # Center horizontally (along epd.width)
+        x = (epd.width - rotated_w) // 2
+
+        # Distribute vertically based on line index
+        y = start_y + i * rotated_h
 
         if i == 1:
-            draw_red.text((x, y), line, font=font, fill=0)  # red layer (middle line)
+            image_red.paste(rotated_text_img, (x, y))
         else:
-            draw_black.text((x, y), line, font=font, fill=0)  # black layer
-    
-    # Display
+            image_black.paste(rotated_text_img, (x, y))
+
     epd.display(epd.getbuffer(image_black), epd.getbuffer(image_red))
 
     time.sleep(15)
