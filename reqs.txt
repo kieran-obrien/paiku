@@ -2,3 +2,5 @@ Pillow
 spidev
 RPi.GPIO
 gpiozero
+requests
+python-dotenv
