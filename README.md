@@ -1,8 +1,8 @@
 <img src="https://github.com/kieran-obrien/pitest/blob/main/public/readme-splash.png?raw=true"/>
 
-# 🌸 Paiku – Raspberry Pi Haiku Generator
+# 🌸 Pyku – Raspberry Pi Haiku Generator
 
-Paiku is a contemplative haiku generator that runs on a Raspberry Pi. It fetches real-time weather and geolocation data, crafts a reflective prompt, and uses an open-source large language model (LLM) to generate beautiful, minimalist haiku.
+Pyku is a contemplative haiku generator that runs on a Raspberry Pi. It fetches real-time weather and geolocation data, crafts a reflective prompt, and uses an open-source large language model (LLM) to generate beautiful, minimalist haiku.
 
 Whether displayed on an e-ink screen or logged to your terminal, Paiku brings a quiet moment of poetry to your day.
 
@@ -43,8 +43,6 @@ python3 main.py
 
 ## 📷 Preview
 Example output:
-
-🌸 Paiku — A Haiku for You
 
 Clouds drift through the day  
 A still breeze whispers gently  
