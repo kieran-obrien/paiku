@@ -1,4 +1,4 @@
-<img src="https://github.com/kieran-obrien/pitest/blob/main/public/readme-splash.png?raw=true"/>
+<img src="https://github.com/kieran-obrien/pitest/blob/main/public/readmesplash.png?raw=true"/>
 
 # 🌸 Pyku – Raspberry Pi Haiku Generator
 
